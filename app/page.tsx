@@ -14,7 +14,8 @@ const categories = [
   {
     id: "buttons",
     title: "Buttons & Actions",
-    description: "Button variants, sizes, icon buttons, toggle, and button groups",
+    description:
+      "Button variants, sizes, icon buttons, toggle, and button groups",
     icon: MousePointerClick,
     count: 5,
     color: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
@@ -22,7 +23,8 @@ const categories = [
   {
     id: "forms",
     title: "Form Inputs",
-    description: "Input, Textarea, Select, Checkbox, Radio, Switch, Slider, OTP",
+    description:
+      "Input, Textarea, Select, Checkbox, Radio, Switch, Slider, OTP",
     icon: FormInput,
     count: 10,
     color: "bg-green-500/10 text-green-600 dark:text-green-400",
@@ -46,7 +48,8 @@ const categories = [
   {
     id: "overlay",
     title: "Overlay & Dialogs",
-    description: "Dialog, Sheet, Drawer, Popover, Tooltip, Dropdown, Context Menu",
+    description:
+      "Dialog, Sheet, Drawer, Popover, Tooltip, Dropdown, Context Menu",
     icon: Layers,
     count: 8,
     color: "bg-pink-500/10 text-pink-600 dark:text-pink-400",
@@ -54,7 +57,8 @@ const categories = [
   {
     id: "layout",
     title: "Layout",
-    description: "Accordion, Collapsible, Resizable Panels, Scroll Area, Separator",
+    description:
+      "Accordion, Collapsible, Resizable Panels, Scroll Area, Separator",
     icon: PanelLeft,
     count: 5,
     color: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400",
@@ -79,7 +83,7 @@ const categories = [
 
 export default function HomePage() {
   return (
-    <div className="mx-auto max-w-screen-xl px-6 py-12">
+    <div className="mx-auto max-w-7xl px-6 py-12">
       <div className="mb-10">
         <h1 className="text-4xl font-bold tracking-tight">Components</h1>
         <p className="mt-2 text-lg text-muted-foreground">
@@ -105,10 +109,10 @@ export default function HomePage() {
                   {cat.count} components
                 </span>
               </div>
-              <h2 className="font-semibold text-foreground group-hover:text-primary transition-colors">
+              <h2 className="font-semibold text-foreground transition-colors group-hover:text-primary">
                 {cat.title}
               </h2>
-              <p className="mt-1 text-sm text-muted-foreground line-clamp-2">
+              <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">
                 {cat.description}
               </p>
             </Link>
@@ -119,7 +123,8 @@ export default function HomePage() {
       <div className="mt-12 rounded-xl border bg-muted/30 p-6">
         <h2 className="text-xl font-semibold">Theme Generator</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Customize colors, radius, and fonts. Preview live changes and export your theme.
+          Customize colors, radius, and fonts. Preview live changes and export
+          your theme.
         </p>
         <Link
           href="/theme-generator"

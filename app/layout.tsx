@@ -59,10 +59,10 @@ export default function RootLayout({
         outfit.variable,
       )}
     >
-      <body className="min-h-screen bg-background text-foreground overflow-hidden">
+      <body className="min-h-screen bg-background text-foreground">
         <ThemeProvider>
           <NavBar />
-          <main className="h-[calc(100vh-3.5rem)] overflow-hidden">{children}</main>
+          <main className="min-h-[calc(100vh-3.5rem)]">{children}</main>
           <Toaster />
         </ThemeProvider>
       </body>

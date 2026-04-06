@@ -2165,9 +2165,9 @@ export default function ThemeGeneratorPage() {
 
   return (
     <TooltipProvider>
-      <div className="flex h-full overflow-hidden">
+      <div className="flex h-[calc(100vh-3.5rem)] overflow-hidden">
         {/* ── Controls Sidebar ── */}
-        <aside className="flex w-72 shrink-0 flex-col overflow-y-auto border-r bg-background">
+        <aside className="flex w-72 shrink-0 flex-col border-r bg-background">
           {/* Header */}
           <div className="flex items-center justify-between border-b px-4 py-3">
             <h2 className="text-sm font-semibold">Theme Generator</h2>
@@ -2186,7 +2186,7 @@ export default function ThemeGeneratorPage() {
             </Tooltip>
           </div>
 
-          <div className="flex-1 space-y-5 p-4">
+        <div className="flex-1 space-y-5 overflow-y-auto p-4">
             {/* Mode Toggle */}
             <div className="space-y-2">
               <p className="text-[10px] font-semibold tracking-widest text-primary uppercase">

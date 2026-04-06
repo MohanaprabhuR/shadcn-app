@@ -10,9 +10,9 @@ const buttonGroupVariants = cva(
     variants: {
       orientation: {
         horizontal:
-          "flex-row [&>*:not(:first-child)]:rounded-l-none [&>*:not(:last-child)]:rounded-r-none",
+          "flex-row [&>*:not(:first-child)]:-ml-px [&>*:not(:first-child)]:rounded-l-none [&>*:not(:last-child)]:rounded-r-none",
         vertical:
-          "flex-col [&>*:not(:first-child)]:rounded-t-none [&>*:not(:first-child):not(:last-child)]:rounded-none [&>*:not(:last-child)]:rounded-b-none",
+          "flex-col [&>*:not(:first-child)]:-mt-px [&>*:not(:first-child)]:rounded-t-none [&>*:not(:first-child):not(:last-child)]:rounded-none [&>*:not(:last-child)]:rounded-b-none",
       },
       variant: {
         default: "",
@@ -48,16 +48,6 @@ const buttonGroupVariants = cva(
         destructive: true,
         size: "lg",
         className: "gap-1.5",
-      },
-      {
-        orientation: "horizontal",
-        variant: "outline",
-        className: "[&>*:not(:first-child)]:-ml-px",
-      },
-      {
-        orientation: "vertical",
-        variant: "outline",
-        className: "[&>*:not(:first-child)]:-mt-px",
       },
     ],
 

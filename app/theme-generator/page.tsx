@@ -50,7 +50,12 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Avatar, AvatarFallback, AvatarGroup } from "@/components/ui/avatar"
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarImage,
+} from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import {
   Breadcrumb,
@@ -1336,6 +1341,89 @@ function AllComponentsPreview({ cssVars }: { cssVars: React.CSSProperties }) {
               ))}
             </div>
           </div>
+          <div className={cn(MOODBOARD_TILE, "lg:col-span-4")}>
+            <p className="mb-3 text-sm font-semibold">Avatars</p>
+            <div className="flex flex-col gap-4">
+              <div className="flex gap-2">
+                <Avatar size="sm">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <Avatar size="md">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <Avatar size="lg">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <Avatar size="xl">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <Avatar size="2xl">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <Avatar size="3xl">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </div>
+              <div className="flex gap-2">
+                <Avatar size="sm" shape="square">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <Avatar size="md" shape="square">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <Avatar size="lg" shape="square">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <Avatar size="xl" shape="square">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <Avatar size="2xl" shape="square">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <Avatar size="3xl" shape="square">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </div>
+              <div className="flex gap-2">
+                <Avatar size="xl" shape="square" status="active">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <Avatar size="xl" shape="square" status="away">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <Avatar size="xl" shape="square" status="sleep">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <Avatar size="xl" shape="square" status="pinned">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <Avatar size="xl" shape="square" status="checked">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <Avatar size="xl" shape="square" status="pin">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </div>
+            </div>
+          </div>
 
           {/* Buttons */}
           <div className={cn(MOODBOARD_TILE, "lg:col-span-7")}>
@@ -2472,7 +2560,9 @@ export default function ThemeGeneratorPage() {
           {/* Browser chrome + tab switcher */}
           <div className="flex items-center justify-between gap-4 border-b bg-background px-4 py-2">
             <div className="flex min-w-0 items-center gap-2">
-              <h2 className="truncate text-sm font-semibold">Theme Generator</h2>
+              <h2 className="truncate text-sm font-semibold">
+                Theme Generator
+              </h2>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button

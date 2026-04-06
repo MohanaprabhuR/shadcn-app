@@ -158,7 +158,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Separator } from "@/components/ui/separator"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarInset,
+  SidebarProvider,
+  SidebarSeparator,
+} from "@/components/ui/sidebar"
 import {
   Sheet,
   SheetContent,
@@ -185,7 +192,6 @@ import { Textarea } from "@/components/ui/textarea"
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
@@ -2164,328 +2170,324 @@ export default function ThemeGeneratorPage() {
   ]
 
   return (
-    <TooltipProvider>
-      <div className="flex h-[calc(100vh-3.5rem)] overflow-hidden">
-        {/* ── Controls Sidebar ── */}
-        <aside className="flex w-72 shrink-0 flex-col border-r bg-background">
-          {/* Header */}
-          <div className="flex items-center justify-between border-b px-4 py-3">
-            <h2 className="text-sm font-semibold">Theme Generator</h2>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  iconOnly
-                  onClick={handleReset}
-                >
-                  <RotateCcw className="size-3.5" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Reset to preset defaults</TooltipContent>
-            </Tooltip>
+    <SidebarProvider
+      persistState={false}
+      className="h-[calc(100vh-3.5rem)] overflow-hidden"
+    >
+      <Sidebar collapsible="none" className="h-full border-r bg-background">
+        <SidebarContent className="min-h-0 space-y-5 px-4 py-4">
+          {/* Mode Toggle */}
+          <div className="space-y-2">
+            <p className="text-[10px] font-semibold tracking-widest text-primary uppercase">
+              Appearance
+            </p>
+            <div className="flex gap-1 rounded-lg border p-1">
+              <button
+                onClick={() => setAppMode("light")}
+                className={cn(
+                  "flex flex-1 items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-colors",
+                  mode === "light"
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <Sun className="size-3.5" /> Light
+              </button>
+              <button
+                onClick={() => setAppMode("dark")}
+                className={cn(
+                  "flex flex-1 items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-colors",
+                  mode === "dark"
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <Moon className="size-3.5" /> Dark
+              </button>
+            </div>
           </div>
 
-        <div className="flex-1 space-y-5 overflow-y-auto p-4">
-            {/* Mode Toggle */}
-            <div className="space-y-2">
-              <p className="text-[10px] font-semibold tracking-widest text-primary uppercase">
-                Appearance
-              </p>
-              <div className="flex gap-1 rounded-lg border p-1">
-                <button
-                  onClick={() => setAppMode("light")}
-                  className={cn(
-                    "flex flex-1 items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-colors",
-                    mode === "light"
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:text-foreground"
-                  )}
-                >
-                  <Sun className="size-3.5" /> Light
-                </button>
-                <button
-                  onClick={() => setAppMode("dark")}
-                  className={cn(
-                    "flex flex-1 items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-colors",
-                    mode === "dark"
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:text-foreground"
-                  )}
-                >
-                  <Moon className="size-3.5" /> Dark
-                </button>
-              </div>
-            </div>
+          <SidebarSeparator />
 
-            <Separator />
-
-            {/* Primary Color */}
-            <div className="space-y-2">
-              <p className="text-[10px] font-semibold tracking-widest text-primary uppercase">
-                Primary Color
-              </p>
-              <div className="flex items-center gap-2">
-                <div className="relative size-9 shrink-0 cursor-pointer overflow-hidden rounded-lg border">
-                  <input
-                    type="color"
-                    value={displayPrimaryHex}
-                    onChange={(e) => setCustomPrimaryHex(e.target.value)}
-                    className="absolute -inset-1 size-[calc(100%+8px)] cursor-pointer opacity-0"
-                  />
-                  <div
-                    className="size-full rounded-lg"
-                    style={{ backgroundColor: displayPrimaryHex }}
-                  />
-                </div>
-                <Input
+          {/* Primary Color */}
+          <div className="space-y-2">
+            <p className="text-[10px] font-semibold tracking-widest text-primary uppercase">
+              Primary Color
+            </p>
+            <div className="flex items-center gap-2">
+              <div className="relative size-9 shrink-0 cursor-pointer overflow-hidden rounded-lg border">
+                <input
+                  type="color"
                   value={displayPrimaryHex}
-                  onChange={(e) => {
-                    if (/^#[0-9a-fA-F]{6}$/.test(e.target.value)) {
-                      setCustomPrimaryHex(e.target.value)
-                    }
-                  }}
-                  className="h-9 font-mono text-xs"
-                  maxLength={7}
+                  onChange={(e) => setCustomPrimaryHex(e.target.value)}
+                  className="absolute -inset-1 size-[calc(100%+8px)] cursor-pointer opacity-0"
+                />
+                <div
+                  className="size-full rounded-lg"
+                  style={{ backgroundColor: displayPrimaryHex }}
                 />
               </div>
+              <Input
+                value={displayPrimaryHex}
+                onChange={(e) => {
+                  if (/^#[0-9a-fA-F]{6}$/.test(e.target.value)) {
+                    setCustomPrimaryHex(e.target.value)
+                  }
+                }}
+                className="h-9 font-mono text-xs"
+                maxLength={7}
+              />
             </div>
+          </div>
 
-            <Separator />
+          <SidebarSeparator />
 
-            {/* Color Token Pickers */}
-            <div className="space-y-2">
+          {/* Color Token Pickers */}
+          <div className="space-y-2">
+            <p className="text-[10px] font-semibold tracking-widest text-primary uppercase">
+              Colors
+            </p>
+            <div className="space-y-1.5">
+              {colorPickers.map(({ label, varName }) => (
+                <ColorPickerRow
+                  key={varName}
+                  label={label}
+                  hex={getHexForVar(varName)}
+                  onChange={(hex) => handleColorChange(varName, hex)}
+                />
+              ))}
+            </div>
+          </div>
+
+          <SidebarSeparator />
+
+          {/* Border Radius */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between gap-2">
               <p className="text-[10px] font-semibold tracking-widest text-primary uppercase">
-                Colors
+                Border Radius
               </p>
-              <div className="space-y-1.5">
-                {colorPickers.map(({ label, varName }) => (
-                  <ColorPickerRow
-                    key={varName}
-                    label={label}
-                    hex={getHexForVar(varName)}
-                    onChange={(hex) => handleColorChange(varName, hex)}
-                  />
-                ))}
+
+              <div className="flex items-center gap-1">
+                <Input
+                  type="number"
+                  min={0}
+                  max={1.5}
+                  step={0.125}
+                  value={radius}
+                  onChange={(e) => {
+                    const v = parseFloat(e.target.value)
+                    if (!isNaN(v)) {
+                      setRadiusPreset("md")
+                      setRadius(Math.min(1.5, Math.max(0, v)))
+                    }
+                  }}
+                  className="h-6 w-16 text-center font-mono text-[10px]"
+                />
+                <span className="text-[10px] text-muted-foreground">rem</span>
               </div>
             </div>
+            <Slider
+              knob
+              min={0}
+              max={1.5}
+              step={0.125}
+              value={[radius]}
+              onValueChange={([v]) => {
+                setRadiusPreset("md")
+                setRadius(v)
+              }}
+            />
+          </div>
 
-            <Separator />
+          <SidebarSeparator />
 
-            {/* Border Radius */}
-            <div className="space-y-2">
+          {/* Typography */}
+          <div className="space-y-3">
+            <p className="text-[10px] font-semibold tracking-widest text-primary uppercase">
+              Typography
+            </p>
+
+            {/* Font family */}
+            <div className="space-y-1.5">
+              <p className="text-[10px] text-muted-foreground">Font Family</p>
+              <Select value={selectedFont} onValueChange={setSelectedFont}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select font" />
+                </SelectTrigger>
+                <SelectContent>
+                  {FONT_OPTIONS.map((f) => (
+                    <SelectItem key={f.cssVar} value={f.cssVar}>
+                      <span
+                        style={{ fontFamily: `var(${f.cssVar}), sans-serif` }}
+                      >
+                        {f.name}
+                      </span>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Base font size */}
+            <div className="space-y-1.5">
               <div className="flex items-center justify-between gap-2">
-                <p className="text-[10px] font-semibold tracking-widest text-primary uppercase">
-                  Border Radius
-                </p>
-
+                <p className="text-[10px] text-muted-foreground">Base Size</p>
                 <div className="flex items-center gap-1">
-                  <Input
-                    type="number"
-                    min={0}
-                    max={1.5}
-                    step={0.125}
-                    value={radius}
-                    onChange={(e) => {
-                      const v = parseFloat(e.target.value)
-                      if (!isNaN(v)) {
-                        setRadiusPreset("md")
-                        setRadius(Math.min(1.5, Math.max(0, v)))
-                      }
-                    }}
-                    className="h-6 w-16 text-center font-mono text-[10px]"
-                  />
-                  <span className="text-[10px] text-muted-foreground">rem</span>
+                  <span className="font-mono text-[10px] text-muted-foreground">
+                    {FONT_SIZE_STEPS[fontSizeIndex].label}
+                  </span>
+                  <span className="text-[10px] text-muted-foreground">·</span>
+                  <span className="font-mono text-[10px] text-muted-foreground">
+                    {FONT_SIZE_STEPS[fontSizeIndex].px}px
+                  </span>
+                </div>
+              </div>
+              <Slider
+                min={0}
+                max={FONT_SIZE_STEPS.length - 1}
+                step={1}
+                value={[fontSizeIndex]}
+                onValueChange={([v]) => setFontSizeIndex(v)}
+                knob
+              />
+            </div>
+
+            {/* Line height */}
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-[10px] text-muted-foreground">Line Height</p>
+                <div className="flex items-center gap-1">
+                  <span className="font-mono text-[10px] text-muted-foreground">
+                    {LINE_HEIGHT_STEPS[lineHeightIndex].label}
+                  </span>
+                  <span className="text-[10px] text-muted-foreground">·</span>
+                  <span className="font-mono text-[10px] text-muted-foreground">
+                    {LINE_HEIGHT_STEPS[lineHeightIndex].value}
+                  </span>
                 </div>
               </div>
               <Slider
                 knob
                 min={0}
-                max={1.5}
-                step={0.125}
-                value={[radius]}
-                onValueChange={([v]) => {
-                  setRadiusPreset("md")
-                  setRadius(v)
-                }}
+                max={LINE_HEIGHT_STEPS.length - 1}
+                step={1}
+                value={[lineHeightIndex]}
+                onValueChange={([v]) => setLineHeightIndex(v)}
               />
             </div>
 
-            <Separator />
-
-            {/* Typography */}
-            <div className="space-y-3">
-              <p className="text-[10px] font-semibold tracking-widest text-primary uppercase">
-                Typography
-              </p>
-
-              {/* Font family */}
-              <div className="space-y-1.5">
-                <p className="text-[10px] text-muted-foreground">Font Family</p>
-                <Select value={selectedFont} onValueChange={setSelectedFont}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select font" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {FONT_OPTIONS.map((f) => (
-                      <SelectItem key={f.cssVar} value={f.cssVar}>
-                        <span
-                          style={{ fontFamily: `var(${f.cssVar}), sans-serif` }}
-                        >
-                          {f.name}
-                        </span>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Base font size */}
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between gap-2">
-                  <p className="text-[10px] text-muted-foreground">Base Size</p>
-                  <div className="flex items-center gap-1">
-                    <span className="font-mono text-[10px] text-muted-foreground">
-                      {FONT_SIZE_STEPS[fontSizeIndex].label}
-                    </span>
-                    <span className="text-[10px] text-muted-foreground">·</span>
-                    <span className="font-mono text-[10px] text-muted-foreground">
-                      {FONT_SIZE_STEPS[fontSizeIndex].px}px
-                    </span>
-                  </div>
+            {/* Letter spacing */}
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-[10px] text-muted-foreground">
+                  Letter Spacing
+                </p>
+                <div className="flex items-center gap-1">
+                  <Input
+                    type="number"
+                    min={-0.05}
+                    max={0.1}
+                    step={0.01}
+                    value={letterSpacing}
+                    onChange={(e) => {
+                      const v = parseFloat(e.target.value)
+                      if (!isNaN(v))
+                        setLetterSpacing(Math.min(0.1, Math.max(-0.05, v)))
+                    }}
+                    className="h-6 w-16 text-center font-mono text-[10px]"
+                  />
+                  <span className="text-[10px] text-muted-foreground">em</span>
                 </div>
-                <Slider
-                  min={0}
-                  max={FONT_SIZE_STEPS.length - 1}
-                  step={1}
-                  value={[fontSizeIndex]}
-                  onValueChange={([v]) => setFontSizeIndex(v)}
-                  knob
-                />
               </div>
-
-              {/* Line height */}
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between gap-2">
-                  <p className="text-[10px] text-muted-foreground">
-                    Line Height
-                  </p>
-                  <div className="flex items-center gap-1">
-                    <span className="font-mono text-[10px] text-muted-foreground">
-                      {LINE_HEIGHT_STEPS[lineHeightIndex].label}
-                    </span>
-                    <span className="text-[10px] text-muted-foreground">·</span>
-                    <span className="font-mono text-[10px] text-muted-foreground">
-                      {LINE_HEIGHT_STEPS[lineHeightIndex].value}
-                    </span>
-                  </div>
-                </div>
-                <Slider
-                  knob
-                  min={0}
-                  max={LINE_HEIGHT_STEPS.length - 1}
-                  step={1}
-                  value={[lineHeightIndex]}
-                  onValueChange={([v]) => setLineHeightIndex(v)}
-                />
-              </div>
-
-              {/* Letter spacing */}
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between gap-2">
-                  <p className="text-[10px] text-muted-foreground">
-                    Letter Spacing
-                  </p>
-                  <div className="flex items-center gap-1">
-                    <Input
-                      type="number"
-                      min={-0.05}
-                      max={0.1}
-                      step={0.01}
-                      value={letterSpacing}
-                      onChange={(e) => {
-                        const v = parseFloat(e.target.value)
-                        if (!isNaN(v))
-                          setLetterSpacing(Math.min(0.1, Math.max(-0.05, v)))
-                      }}
-                      className="h-6 w-16 text-center font-mono text-[10px]"
-                    />
-                    <span className="text-[10px] text-muted-foreground">
-                      em
-                    </span>
-                  </div>
-                </div>
-                <Slider
-                  knob
-                  min={-0.05}
-                  max={0.1}
-                  step={0.01}
-                  value={[letterSpacing]}
-                  onValueChange={([v]) => setLetterSpacing(v)}
-                />
-              </div>
-            </div>
-
-            <Separator />
-
-            {/* Spacing / Density */}
-            <div className="space-y-3">
-              <p className="text-[10px] font-semibold tracking-widest text-primary uppercase">
-                Spacing
-              </p>
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-end gap-2">
-                  <div className="flex items-center gap-1">
-                    <span className="font-mono text-[10px] text-muted-foreground capitalize">
-                      {DENSITY_STEPS[densityIndex].label}
-                    </span>
-                    <span className="text-[10px] text-muted-foreground">·</span>
-                    <span className="font-mono text-[10px] text-muted-foreground">
-                      {DENSITY_STEPS[densityIndex].px}
-                    </span>
-                  </div>
-                </div>
-                <Slider
-                  knob
-                  min={0}
-                  max={DENSITY_STEPS.length - 1}
-                  step={1}
-                  value={[densityIndex]}
-                  onValueChange={([v]) => setDensityIndex(v)}
-                />
-              </div>
+              <Slider
+                knob
+                min={-0.05}
+                max={0.1}
+                step={0.01}
+                value={[letterSpacing]}
+                onValueChange={([v]) => setLetterSpacing(v)}
+              />
             </div>
           </div>
 
-          {/* Footer actions */}
-          <div className="space-y-2 border-t p-4">
-            <Button
-              className="w-full"
-              variant="outline"
-              size="sm"
-              onClick={() => setShowCSS(!showCSS)}
-            >
-              <FileText className="size-3.5" />
-              {showCSS ? "Hide CSS" : "Show CSS"}
-            </Button>
-            <Button className="w-full" size="sm" onClick={handleCopy}>
-              {copied ? (
-                <>
-                  <Check className="size-3.5" /> Copied!
-                </>
-              ) : (
-                <>
-                  <Copy className="size-3.5" /> Copy CSS
-                </>
-              )}
-            </Button>
-          </div>
-        </aside>
+          <SidebarSeparator />
 
+          {/* Spacing / Density */}
+          <div className="space-y-3">
+            <p className="text-[10px] font-semibold tracking-widest text-primary uppercase">
+              Spacing
+            </p>
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-end gap-2">
+                <div className="flex items-center gap-1">
+                  <span className="font-mono text-[10px] text-muted-foreground capitalize">
+                    {DENSITY_STEPS[densityIndex].label}
+                  </span>
+                  <span className="text-[10px] text-muted-foreground">·</span>
+                  <span className="font-mono text-[10px] text-muted-foreground">
+                    {DENSITY_STEPS[densityIndex].px}
+                  </span>
+                </div>
+              </div>
+              <Slider
+                knob
+                min={0}
+                max={DENSITY_STEPS.length - 1}
+                step={1}
+                value={[densityIndex]}
+                onValueChange={([v]) => setDensityIndex(v)}
+              />
+            </div>
+          </div>
+        </SidebarContent>
+
+        <SidebarFooter className="space-y-2 border-t p-4">
+          <Button
+            className="w-full"
+            variant="outline"
+            size="sm"
+            onClick={() => setShowCSS(!showCSS)}
+          >
+            <FileText className="size-3.5" />
+            {showCSS ? "Hide CSS" : "Show CSS"}
+          </Button>
+          <Button className="w-full" size="sm" onClick={handleCopy}>
+            {copied ? (
+              <>
+                <Check className="size-3.5" /> Copied!
+              </>
+            ) : (
+              <>
+                <Copy className="size-3.5" /> Copy CSS
+              </>
+            )}
+          </Button>
+        </SidebarFooter>
+      </Sidebar>
+
+      <SidebarInset className="min-h-0 overflow-hidden">
         {/* ── Preview Area ── */}
         <div className="flex flex-1 flex-col overflow-hidden">
           {/* Browser chrome + tab switcher */}
           <div className="flex items-center justify-between gap-4 border-b bg-background px-4 py-2">
+            <div className="flex min-w-0 items-center gap-2">
+              <h2 className="truncate text-sm font-semibold">Theme Generator</h2>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    iconOnly
+                    onClick={handleReset}
+                  >
+                    <RotateCcw className="size-3.5" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>Reset to defaults</TooltipContent>
+              </Tooltip>
+            </div>
+
             {/* Browser dots */}
             <div className="flex shrink-0 items-center gap-1.5">
               <div className="size-3 rounded-full bg-red-400/70" />
@@ -2585,8 +2587,8 @@ export default function ThemeGeneratorPage() {
             )}
           </div>
         </div>
-      </div>
-    </TooltipProvider>
+      </SidebarInset>
+    </SidebarProvider>
   )
 }
 

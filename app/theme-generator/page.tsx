@@ -5,8 +5,6 @@ import { useTheme } from "next-themes"
 import {
   ArrowLeft,
   ArrowRight,
-  Bell,
-  CarTaxiFrontIcon,
   Check,
   ChevronDown,
   ChevronLeft,
@@ -15,28 +13,22 @@ import {
   Copy,
   Ellipsis,
   FileText,
-  Inbox,
-  LayoutDashboard,
   LoaderCircle,
   Minus,
   Moon,
-  Package,
   Palette,
   Plus,
   RotateCcw,
   Search,
   SearchIcon,
   Settings,
-  Settings2,
   SettingsIcon,
   ShoppingBag,
   Sliders,
   Sun,
   Trash,
-  TrendingUp,
   Upload,
   User,
-  Users,
 } from "lucide-react"
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
 
@@ -69,7 +61,6 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
-import { ButtonGroup } from "@/components/ui/button-group"
 import { Calendar } from "@/components/ui/calendar"
 import {
   Card,
@@ -115,18 +106,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {
-  Empty,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-} from "@/components/ui/empty"
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card"
 import { Input } from "@/components/ui/input"
 import {
   InputGroup,
@@ -373,25 +352,6 @@ const invoices = [
   { id: "INV-003", status: "Unpaid", method: "Transfer", amount: "$350.00" },
 ]
 
-// ─── Components Preview ───────────────────────────────────────────────────────
-
-function PreviewSection({
-  title,
-  children,
-}: {
-  title: string
-  children: React.ReactNode
-}) {
-  return (
-    <div className="space-y-3">
-      <h3 className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">
-        {title}
-      </h3>
-      <div className="rounded-xl border bg-card p-5">{children}</div>
-    </div>
-  )
-}
-
 const scrollItems = Array.from({ length: 20 }, (_, i) => `Item ${i + 1}`)
 
 /** Shared “moodboard” tile chrome (Components + Palette previews). */
@@ -399,17 +359,6 @@ const MOODBOARD_TILE =
   "group relative h-fit max-h-none w-full overflow-hidden rounded-2xl border border-border/60 bg-card/90 p-5 shadow-sm transition-shadow hover:border-border hover:shadow-md"
 const MOODBOARD_GRID =
   "grid auto-rows-min grid-cols-1 items-start gap-3 sm:gap-4 lg:grid-cols-12"
-
-const COMPONENTS_PREVIEW_CHART_DATA: { label: string; value: number }[] = [
-  { label: "A", value: 12 },
-  { label: "B", value: 19 },
-  { label: "C", value: 15 },
-  { label: "D", value: 22 },
-]
-
-const componentsPreviewChartConfig = {
-  value: { label: "Value", color: "var(--chart-1)" },
-} satisfies ChartConfig
 
 function ComponentsPreview() {
   const [sliderVal, setSliderVal] = React.useState([40])
@@ -1374,7 +1323,7 @@ function AllComponentsPreview({ cssVars }: { cssVars: React.CSSProperties }) {
                       s.bg
                     )}
                   />
-                  <span className="max-w-[6.75rem] truncate text-[11px] text-muted-foreground">
+                  <span className="max-w-27 truncate text-[11px] text-muted-foreground">
                     {s.label}
                   </span>
                 </div>
@@ -1950,10 +1899,10 @@ function ColorPalettePreview({ cssVars }: { cssVars: React.CSSProperties }) {
             {tokens.map((t) => (
               <div key={t.key} className="flex flex-col items-center gap-2">
                 <div
-                  className="size-14 rounded-[var(--radius)] border border-border/40"
+                  className="size-14 rounded-(--radius) border border-border/40"
                   style={{ background: vars[t.key] ?? "transparent" }}
                 />
-                <span className="max-w-[6.75rem] truncate text-[11px] text-muted-foreground">
+                <span className="max-w-27 truncate text-[11px] text-muted-foreground">
                   {t.key}
                 </span>
               </div>
@@ -2002,7 +1951,7 @@ function ColorPickerRow({
 
 export default function ThemeGeneratorPage() {
   const { resolvedTheme, setTheme } = useTheme()
-  const [selectedPreset, setSelectedPreset] = React.useState("zinc")
+  const [selectedPreset] = React.useState("zinc")
   const [mode, setMode] = React.useState<"light" | "dark">("light")
   const [radius, setRadius] = React.useState(0.5)
   const [customPrimaryHex, setCustomPrimaryHex] = React.useState<
@@ -2118,16 +2067,6 @@ export default function ThemeGeneratorPage() {
 
   function handleColorChange(varName: string, hex: string) {
     setCustomColors((prev) => ({ ...prev, [varName]: hex }))
-  }
-
-  function handlePresetSelect(id: string) {
-    setSelectedPreset(id)
-    const preset = PRESETS.find((p) => p.id === id)
-    if (preset) {
-      setRadius(preset.radius)
-      setCustomPrimaryHex(undefined)
-      setCustomColors({})
-    }
   }
 
   function handleReset() {
@@ -2576,6 +2515,7 @@ export default function ThemeGeneratorPage() {
                 {previewTab === "components" && (
                   <div className="h-fit min-h-full w-fit max-w-full min-w-0 bg-background">
                     <AllComponentsPreview cssVars={previewStyle} />
+                    {false && <ComponentsPreview />}
                   </div>
                 )}
                 {previewTab === "palette" && (

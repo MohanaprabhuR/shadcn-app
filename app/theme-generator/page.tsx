@@ -1953,6 +1953,26 @@ export default function ThemeGeneratorPage() {
   const { resolvedTheme, setTheme } = useTheme()
   const [selectedPreset] = React.useState("zinc")
   const [mode, setMode] = React.useState<"light" | "dark">("light")
+  const RADIUS_PRESETS = React.useMemo(
+    () =>
+      [
+        { id: "xs", label: "xs", rem: 0.25 },
+        { id: "sm", label: "sm", rem: 0.375 },
+        { id: "md", label: "md", rem: 0.5 },
+        { id: "lg", label: "lg", rem: 0.625 },
+        { id: "xl", label: "xl", rem: 0.75 },
+        { id: "2xl", label: "2xl", rem: 1 },
+        { id: "3xl", label: "3xl", rem: 1.25 },
+        // Matches fixed tokens in `app/tokens/base-colors.css`
+        { id: "4xl", label: "4xl", rem: 1 },
+        { id: "5xl", label: "5xl", rem: 1.25 },
+        { id: "6xl", label: "6xl", rem: 6.25 },
+      ] as const,
+    []
+  )
+
+  const [radiusPreset, setRadiusPreset] =
+    React.useState<(typeof RADIUS_PRESETS)[number]["id"]>("md")
   const [radius, setRadius] = React.useState(0.5)
   const [customPrimaryHex, setCustomPrimaryHex] = React.useState<
     string | undefined
@@ -1995,6 +2015,11 @@ export default function ThemeGeneratorPage() {
       buildCSSVars(currentPreset, mode, radius, customPrimaryHex, customColors),
     [currentPreset, mode, radius, customPrimaryHex, customColors]
   )
+
+  React.useEffect(() => {
+    const preset = RADIUS_PRESETS.find((p) => p.id === radiusPreset)
+    if (preset) setRadius(preset.rem)
+  }, [RADIUS_PRESETS, radiusPreset])
 
   const previewFont = `var(${selectedFont})`
   const fontStack = `${previewFont}, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"`
@@ -2253,6 +2278,7 @@ export default function ThemeGeneratorPage() {
                 <p className="text-[10px] font-semibold tracking-widest text-primary uppercase">
                   Border Radius
                 </p>
+
                 <div className="flex items-center gap-1">
                   <Input
                     type="number"
@@ -2262,7 +2288,10 @@ export default function ThemeGeneratorPage() {
                     value={radius}
                     onChange={(e) => {
                       const v = parseFloat(e.target.value)
-                      if (!isNaN(v)) setRadius(Math.min(1.5, Math.max(0, v)))
+                      if (!isNaN(v)) {
+                        setRadiusPreset("md")
+                        setRadius(Math.min(1.5, Math.max(0, v)))
+                      }
                     }}
                     className="h-6 w-16 text-center font-mono text-[10px]"
                   />
@@ -2275,7 +2304,10 @@ export default function ThemeGeneratorPage() {
                 max={1.5}
                 step={0.125}
                 value={[radius]}
-                onValueChange={([v]) => setRadius(v)}
+                onValueChange={([v]) => {
+                  setRadiusPreset("md")
+                  setRadius(v)
+                }}
               />
             </div>
 
